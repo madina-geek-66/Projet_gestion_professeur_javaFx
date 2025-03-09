@@ -1,0 +1,194 @@
+/* Style moderne pour la sidebar de navigation */
+
+.sidebar {
+    -fx-background-color: #1a1a1a;
+    -fx-padding: 10 0 10 0;
+    -fx-transition: -fx-pref-width 0.3s ease-in-out;
+    
+}
+
+/* .collapsed {
+    -fx-background-color: #1a1a1a;
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+    -fx-transition: 0.3s;
+}
+
+.expanded {
+    -fx-background-color: #1a1a1a;
+    -fx-pref-width: 220;
+    -fx-opacity: 1;
+    -fx-transition: 0.3s;
+} */
+
+.sidebar.expanded {
+    -fx-pref-width: 200px;
+}
+
+.sidebar.collapsed {
+    -fx-pref-width: 60px;
+    -fx-background-color: #1a1a1a;
+}
+
+.sidebar.collapsed .button {
+    -fx-padding: 10px 10px;
+    -fx-min-width: 40px;
+    -fx-max-width: 40px;
+}
+
+#drawerBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 15 20 15 20;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+    -fx-pref-width: 200px;
+}
+
+#drawerBtn:hover {
+    -fx-background-color: #2a2a2a;
+}
+
+.sidebar.expanded #usersBtn, 
+.sidebar.expanded #coursBtn, 
+.sidebar.expanded #emargementBtn, 
+.sidebar.expanded #rapportsBtn, 
+.sidebar.expanded #logoutBtn {
+    -fx-alignment: CENTER_LEFT;
+    -fx-content-display: LEFT;
+    -fx-graphic-text-gap: 10;
+}
+
+.sidebar.collapsed #usersBtn, 
+.sidebar.collapsed #coursBtn, 
+.sidebar.collapsed #emargementBtn, 
+.sidebar.collapsed #rapportsBtn, 
+.sidebar.collapsed #logoutBtn {
+    -fx-alignment: CENTER;
+    -fx-content-display: GRAPHIC_ONLY;
+    -fx-pref-width: 50px;
+}
+
+/* Style de base pour les boutons de navigation */
+#usersBtn,
+#coursBtn,
+#emargementBtn,
+#rapportsBtn, #salleBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e0e0e0;
+    -fx-font-size: 14px;
+    -fx-padding: 15 20 15 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-pref-width: 200px;
+    -fx-alignment: CENTER;
+    -fx-content-display: TOP;
+}
+
+#logoutBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e0e0e0;
+    -fx-font-size: 14px;
+    -fx-padding: 15 20 15 20;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: transparent transparent rgb(83, 19, 19) transparent;
+    -fx-cursor: hand;
+    -fx-pref-width: 200px;
+    -fx-alignment: CENTER;
+    -fx-content-display: TOP;
+}
+
+/* Effet hover pour les boutons */
+#usersBtn:hover,
+#coursBtn:hover,
+#emargementBtn:hover,
+#rapportsBtn:hover,
+#salleBtn:hover {
+    -fx-background-color: #2a2a2a;
+    -fx-border-color: #3498db;
+}
+
+#logoutBtn:hover {
+    -fx-background-color: #840505;
+    -fx-border-color: #fafbfb;
+}
+
+/* Style pour le bouton actif */
+#usersBtn.active,
+#coursBtn.active,
+#emargementBtn.active,
+#rapportsBtn.active,
+#salleBtn.active {
+    -fx-background-color: #031c55;
+    -fx-border-color: #000305;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+/* Style pour les icônes */
+#userIcon,
+#courIcon,
+#emargIcon,
+#rapportIcon,
+#logoutIcon,
+#salleIcon {
+    -fx-fill: #e0e0e0;
+    -fx-alignment: CENTER;
+    -fx-font-size: 18px;
+    -fx-padding: 0 10 0 0;
+}
+
+#drawerIcon {
+    -fx-fill: #e0e0e0;
+    -fx-alignment: CENTER;
+    -fx-font-size: 25px;
+    -fx-padding: 0 10 0 0;
+}
+/* Style pour les icônes des boutons actifs ou en hover */
+#usersBtn.active #userIcon,
+#coursBtn.active #courIcon,
+#emargementBtn.active #emargIcon,
+#rapportsBtn.active #rapportIcon,
+#salleBtn.active #salleIcon{
+    -fx-fill: #3498db;
+}
+
+/* Pour ajouter un léger effet d'animation */
+#usersBtn,
+#coursBtn,
+#emargementBtn,
+#rapportsBtn {
+    -fx-transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Fond de la zone de contenu principale */
+.content-area {
+    -fx-background-color: white;
+    -fx-background-radius: 5 0 0 5;
+}
+
+/* Titre de section dans la barre latérale */
+.sidebar-title {
+    -fx-text-fill: #3498db;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 20 15 10 15;
+}
+
+/* .glyph-icon {
+    -fx-fill: #CBD5E0;
+}
+
+.button:hover .glyph-icon, .button.active .glyph-icon {
+    -fx-fill: white;
+}
+
+
+.content-pane {
+    -fx-background-color: #F7FAFC;
+    -fx-padding: 20px;
+} */
