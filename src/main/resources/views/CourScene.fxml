@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sn.groupeisi.projetgestionprofesseurs.controllers.CourSceneController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="934.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sn.groupeisi.projetgestionprofesseurs.controllers.CourSceneController">
+   <children>
+      <Pane layoutX="14.0" layoutY="35.0" prefHeight="538.0" prefWidth="245.0" style="-fx-background-color: rgb(193, 186, 186);">
+         <children>
+            <Label layoutX="27.0" layoutY="38.0" prefHeight="23.0" prefWidth="59.0" text="Nom">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="99.0" prefHeight="23.0" prefWidth="92.0" text="Description">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="213.0" prefHeight="23.0" prefWidth="59.0" text="Jour">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="278.0" prefHeight="23.0" prefWidth="92.0" text="Heure Début">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="332.0" prefHeight="23.0" prefWidth="92.0" text="Heure Fin">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="387.0" prefHeight="23.0" prefWidth="59.0" text="Salle">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="443.0" prefHeight="23.0" prefWidth="113.0" text="Professeur">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="fieldNom" layoutX="27.0" layoutY="61.0" prefHeight="25.0" prefWidth="171.0" />
+            <TextArea fx:id="fieldDesc" layoutX="27.0" layoutY="122.0" prefHeight="73.0" prefWidth="171.0" />
+            <ComboBox fx:id="cmbSalle" layoutX="27.0" layoutY="410.0" prefHeight="25.0" prefWidth="171.0" />
+            <ComboBox fx:id="cmbProfesseur" layoutX="27.0" layoutY="466.0" prefHeight="25.0" prefWidth="171.0" />
+            <Spinner fx:id="spinHeureD" layoutX="27.0" layoutY="301.0" prefHeight="25.0" prefWidth="75.0" />
+            <Spinner fx:id="spinHeureF" layoutX="27.0" layoutY="355.0" prefHeight="25.0" prefWidth="75.0" />
+            <ComboBox fx:id="cmbJour" layoutX="27.0" layoutY="236.0" prefHeight="25.0" prefWidth="171.0" />
+            <Spinner fx:id="spinMinuteD" layoutX="123.0" layoutY="301.0" prefHeight="25.0" prefWidth="75.0" />
+            <Spinner fx:id="spinMinuteF" layoutX="123.0" layoutY="355.0" prefHeight="25.0" prefWidth="75.0" />
+         </children>
+      </Pane>
+      <TableView fx:id="tableCours" layoutX="272.0" layoutY="34.0" prefHeight="538.0" prefWidth="656.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="colNom" prefWidth="75.0" text="Nom" />
+            <TableColumn fx:id="colDescription" prefWidth="80.79998779296875" text="Description" />
+            <TableColumn fx:id="colJour" prefWidth="76.79998779296875" text="Jour" />
+            <TableColumn fx:id="colHeureD" prefWidth="76.0" text="Heure Debut" />
+            <TableColumn fx:id="colHeureF" prefWidth="85.5999755859375" text="Heure Fin" />
+            <TableColumn fx:id="colSalle" prefWidth="76.0" text="Salle" />
+            <TableColumn fx:id="colProfesseur" prefWidth="111.2000732421875" text="Professeur" />
+        </columns>
+      </TableView>
+      <ButtonBar layoutY="592.0" prefHeight="40.0" prefWidth="322.0">
+        <buttons>
+          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveCours" text="Enregistrer" />
+            <Button fx:id="btnEdit" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editCours" text="Modifier" />
+            <Button fx:id="btnDelete" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCours" text="Supprimer" />
+            <Button fx:id="btnClear" layoutX="202.0" layoutY="17.0" mnemonicParsing="false" onAction="#clearField" text="Effacer" />
+        </buttons>
+      </ButtonBar>
+   </children>
 </AnchorPane>

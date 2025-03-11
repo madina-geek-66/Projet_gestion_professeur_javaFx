@@ -52,6 +52,17 @@ public class UserImplement implements IUser {
         return listUser;
     }
 
+    public ObservableList<User> getProfesseurs() {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        entityManager.getTransaction().begin();
+        ObservableList<User> listProfesseurs = FXCollections.observableArrayList();
+        List<User> professeurs = entityManager.createQuery("FROM users u WHERE u.role = 'PROFESSEUR'", User.class).getResultList();
+        entityManager.getTransaction().commit();
+        listProfesseurs.addAll(professeurs);
+        entityManager.close();
+        return listProfesseurs;
+    }
+
     @Override
     public User get(Long id) {
         return null;

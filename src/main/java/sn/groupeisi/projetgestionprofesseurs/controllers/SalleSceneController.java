@@ -3,16 +3,15 @@ package sn.groupeisi.projetgestionprofesseurs.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import sn.groupeisi.projetgestionprofesseurs.dao.SalleImplement;
 import sn.groupeisi.projetgestionprofesseurs.entities.Salle;
+import sn.groupeisi.projetgestionprofesseurs.utils.JPAUtils;
 
+import javax.persistence.NoResultException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -73,6 +72,7 @@ public class SalleSceneController implements Initializable {
     void saveSalle() {
         try{
             if(fieldLibelle.getText().isEmpty()){
+                new Alert(Alert.AlertType.ERROR, "Veuillez remplir le champ.").showAndWait();
                 return;
             }
             Salle salle = new Salle();
@@ -120,4 +120,5 @@ public class SalleSceneController implements Initializable {
     private  void ClearField(){
         fieldLibelle.clear();
     }
+
 }

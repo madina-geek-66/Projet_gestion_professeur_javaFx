@@ -9,13 +9,13 @@ import java.util.List;
 public class Cours {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     @Column(unique = true)
     private String nom;
     @Column
     private String description;
     @Column(nullable = false)
-    private DayOfWeek jour;
+    private String jour;
     @Column(nullable = false)
     private LocalTime heure_debut;
     @Column(nullable = false)
@@ -37,11 +37,11 @@ public class Cours {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,13 +61,21 @@ public class Cours {
         this.description = description;
     }
 
-    public DayOfWeek getJour() {
+    public String getJour() {
         return jour;
     }
 
-    public void setJour(DayOfWeek jour) {
+    public void setJour(String jour) {
         this.jour = jour;
     }
+
+    //    public DayOfWeek getJour() {
+//        return jour;
+//    }
+//
+//    public void setJour(DayOfWeek jour) {
+//        this.jour = jour;
+//    }
 
     public LocalTime getHeure_debut() {
         return heure_debut;

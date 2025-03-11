@@ -2,11 +2,13 @@ package sn.groupeisi.projetgestionprofesseurs.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import sn.groupeisi.projetgestionprofesseurs.entities.Salle;
 import sn.groupeisi.projetgestionprofesseurs.entities.User;
 import sn.groupeisi.projetgestionprofesseurs.utils.JPAUtils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class SalleImplement implements ISalle{
@@ -14,6 +16,10 @@ public class SalleImplement implements ISalle{
     @Override
     public void add(Salle salle) {
         this.entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        if (existsByLibelle(salle.getLibelle())) {
+            new Alert(Alert.AlertType.ERROR, "Cette salle existe déjà ").showAndWait();
+            return;
+        }
         entityManager.getTransaction().begin();
         entityManager.persist(salle);
         entityManager.getTransaction().commit();
@@ -49,6 +55,18 @@ public class SalleImplement implements ISalle{
         listSalle.addAll(salles);
         entityManager.close();
         return listSalle;
+    }
+
+    private boolean existsByLibelle(String libelle) {
+        this.entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            Salle salle = entityManager.createQuery("SELECT s FROM Salle s WHERE s.libelle = :libelle", Salle.class)
+                    .setParameter("libelle", libelle)
+                    .getSingleResult();
+            return salle != null;
+        } catch (NoResultException e) {
+            return false;
+        }
     }
 
     @Override
