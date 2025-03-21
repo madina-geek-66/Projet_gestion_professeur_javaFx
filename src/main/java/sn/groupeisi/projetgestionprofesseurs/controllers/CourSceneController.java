@@ -14,19 +14,28 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 import sn.groupeisi.projetgestionprofesseurs.dao.CourImplement;
+import sn.groupeisi.projetgestionprofesseurs.dao.NotificationImplement;
 import sn.groupeisi.projetgestionprofesseurs.dao.SalleImplement;
 import sn.groupeisi.projetgestionprofesseurs.dao.UserImplement;
-import sn.groupeisi.projetgestionprofesseurs.entities.Cours;
-import sn.groupeisi.projetgestionprofesseurs.entities.Salle;
-import sn.groupeisi.projetgestionprofesseurs.entities.User;
+import sn.groupeisi.projetgestionprofesseurs.entities.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class CourSceneController implements Initializable {
+
+    private User currentUser = new User();
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
 
     private CourImplement courImplement = new CourImplement();
     private SalleImplement salleImplement = new SalleImplement();
@@ -141,20 +150,12 @@ public class CourSceneController implements Initializable {
         }
 
 
-
-//        if (heureDebut.isAfter(heureFin) || heureDebut.equals(heureFin)) {
-//            new Alert(Alert.AlertType.ERROR, "L'heure de début doit être avant l'heure de fin !").showAndWait();
-//            return;
-//        }
-
-
     }
 
     @FXML
     void saveCours() {
         LocalTime heureDebut = LocalTime.of(spinHeureD.getValue(), spinMinuteD.getValue());
         LocalTime heureFin = LocalTime.of(spinHeureF.getValue(), spinMinuteF.getValue());
-        //new Alert(Alert.AlertType.ERROR, "Veuillez remplir le champ.").showAndWait();
         try{
             if (fieldNom.getText().isEmpty() || fieldDesc.getText().isEmpty() || cmbJour.getValue() == null || cmbProfesseur.getValue() == null || cmbSalle.getValue() == null) {
                 new Alert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs !").showAndWait();
@@ -175,6 +176,30 @@ public class CourSceneController implements Initializable {
             cours.setSalle(cmbSalle.getSelectionModel().getSelectedItem());
             cours.setProfesseur(cmbProfesseur.getValue());
             courImplement.add(cours);
+
+            User professeur = cours.getProfesseur();
+            if (professeur != null && professeur.getEmail() != null && !professeur.getEmail().isEmpty()) {
+                Email emailService = new Email();
+                String mess = emailService.envoyerEmailProfesseur(
+                        professeur.getEmail(),
+                        professeur.getNom() + " " + professeur.getPrenom(),
+                        fieldNom.getText(),
+                        cmbJour.getValue(),
+                        heureDebut.toString(),
+                        heureFin.toString(),
+                        cmbSalle.getValue().getLibelle()
+                );
+                NotificationImplement notificationImplement = new NotificationImplement();
+                LocalDate date = LocalDate.now();
+                Notification notification = new Notification(mess, professeur, date);
+                notificationImplement.add(notification);
+                new Alert(Alert.AlertType.INFORMATION,
+                        "Le cours a été ajouté avec succès et une notification a été envoyée au professeur.").showAndWait();
+            } else {
+                new Alert(Alert.AlertType.WARNING,
+                        "Le cours a été ajouté avec succès mais l'email du professeur est manquant. Aucune notification n'a été envoyée.").showAndWait();
+            }
+
             load();
             clear();
         }catch (Exception e){
@@ -245,9 +270,9 @@ public class CourSceneController implements Initializable {
             }
         });
 
-        spinHeureD.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 20, 8));
+        spinHeureD.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 20, 8));
         spinMinuteD.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
-        spinHeureF.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(9, 20, 9));
+        spinHeureF.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 20, 9));
         spinMinuteF.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
     }
 

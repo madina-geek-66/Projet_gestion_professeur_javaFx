@@ -18,13 +18,22 @@ public class CourImplement implements ICour {
     @Override
     public void add(Cours cours) {
         this.entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
-        if (check(cours.getJour(), cours.getHeure_debut(), cours.getHeure_fin())) {
+        if (check(cours.getJour(), cours.getHeure_debut(), cours.getHeure_fin(), cours.getSalle().getId())) {
             Platform.runLater(() -> {
-                new Alert(Alert.AlertType.ERROR, "Un cours existe déjà à ce créneau !").showAndWait();
+                new Alert(Alert.AlertType.ERROR, "Un cours existe déjà à ce créneau dans cette salle!").showAndWait();
             });
 
             return;
         }
+
+        if (checkProfesseurDisponible(cours.getProfesseur().getId(), cours.getJour(), cours.getHeure_debut(), cours.getHeure_fin())) {
+            Platform.runLater(() -> {
+                new Alert(Alert.AlertType.ERROR, "Le professeur à déjà un cours dans cet créneau! ").showAndWait();
+            });
+
+            return;
+        }
+
         if (cours.getHeure_fin().isBefore(cours.getHeure_debut()) || cours.getHeure_fin().equals(cours.getHeure_debut())) {
             Platform.runLater(() -> {
                 new Alert(Alert.AlertType.ERROR, "L'heure de fin ne peut pas être avant ou égale à l'heure de début !").showAndWait();
@@ -44,6 +53,13 @@ public class CourImplement implements ICour {
             Platform.runLater(() -> {
                 new Alert(Alert.AlertType.ERROR, "Un cours existe déjà à ce créneau !").showAndWait();
             });
+            return;
+        }
+        if (checkProfesseurDisponible(cours.getProfesseur().getId(), cours.getJour(), cours.getHeure_debut(), cours.getHeure_fin())) {
+            Platform.runLater(() -> {
+                new Alert(Alert.AlertType.ERROR, "Le professeur à déjà un cours dans cet créneau! ").showAndWait();
+            });
+
             return;
         }
         if (cours.getHeure_fin().isBefore(cours.getHeure_debut()) || cours.getHeure_fin().equals(cours.getHeure_debut())) {
@@ -82,28 +98,52 @@ public class CourImplement implements ICour {
 
     @Override
     public Cours get(Long id) {
-        return null;
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        Cours cours = entityManager.find(Cours.class, id);
+        entityManager.close();
+        return cours;
     }
 
 
 
-    public boolean check(String jour, LocalTime heureDebut, LocalTime heureFin) {
+    public boolean check(String jour, LocalTime heureDebut, LocalTime heureFin, Long salleId) {
         this.entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
         try {
             Long count = entityManager.createQuery(
                             "SELECT COUNT(c) FROM Cours c WHERE c.jour = :jour " +
+                                    "AND (c.heure_debut < :heureFin AND c.heure_fin > :heureDebut) " +
+                                    "AND c.salle.id = :salleId", Long.class)
+                    .setParameter("jour", jour)
+                    .setParameter("heureDebut", heureDebut)
+                    .setParameter("heureFin", heureFin)
+                    .setParameter("salleId", salleId)
+                    .getSingleResult();
+
+            return count > 0;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean checkProfesseurDisponible(Long professeurId, String jour, LocalTime heureDebut, LocalTime heureFin) {
+        this.entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            // Vérifie si le professeur a déjà un cours qui chevauche l'intervalle de temps spécifié
+            Long count = entityManager.createQuery(
+                            "SELECT COUNT(c) FROM Cours c JOIN c.professeur p " +
+                                    "WHERE p.id = :professeurId AND c.jour = :jour " +
                                     "AND (c.heure_debut < :heureFin AND c.heure_fin > :heureDebut)", Long.class)
+                    .setParameter("professeurId", professeurId)
                     .setParameter("jour", jour)
                     .setParameter("heureDebut", heureDebut)
                     .setParameter("heureFin", heureFin)
                     .getSingleResult();
 
-            if (count > 0) {
-                return true;
-            }
-            return false;
+            // Retourne true si le professeur est disponible (aucun cours trouvé)
+            return count>0;
         } catch (NoResultException e) {
-            return false;
+            System.err.println("Erreur lors de la vérification de la disponibilité du professeur: " + e.getMessage());
+            return false; // En cas d'erreur, on considère que le professeur n'est pas disponible par précaution
         }
     }
 
@@ -126,6 +166,33 @@ public class CourImplement implements ICour {
         } catch (NoResultException e) {
             return false;
         }
+    }
+
+    public List<Cours> getCoursParProf(String professeurId) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        List<Cours> coursList = entityManager.createQuery("SELECT c FROM Cours c WHERE c.professeur.id = :professeurId", Cours.class)
+                .setParameter("professeurId", professeurId)
+                .getResultList();
+        entityManager.close();
+        return coursList;
+    }
+
+    public List<Cours> getCoursParProfEtJour(Long professeurId, String jour) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        List<Cours> coursList = entityManager.createQuery("SELECT c FROM Cours c WHERE c.professeur.id = :professeurId AND c.jour = :jour", Cours.class)
+                .setParameter("professeurId", professeurId)
+                .setParameter("jour", jour)
+                .getResultList();
+        entityManager.close();
+        return coursList;
+    }
+
+
+    public Cours findById(String id) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        Cours cours = entityManager.find(Cours.class, id);
+        entityManager.close();
+        return cours;
     }
 
 

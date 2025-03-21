@@ -5,32 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sn.groupeisi.projetgestionprofesseurs.controllers.HomeSceneController;
-import sn.groupeisi.projetgestionprofesseurs.utils.JPAUtils;
-
-import javax.persistence.EntityManager;
 
 public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("E-SCHOOL");
-        FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/views/HomeScene.fxml"));
-        Parent mainRoot = mainLoader.load();
-        Scene mainScene = new Scene(mainRoot);
 
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource("/views/UserScene.fxml"));
-        Parent userRoot = userLoader.load();
-        Scene userScene = new Scene(userRoot);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginScene.fxml"));
+        Parent root = loader.load();
 
-        FXMLLoader coursLoader = new FXMLLoader(getClass().getResource("/views/CourScene.fxml"));
-        Parent coursRoot = coursLoader.load();
-        Scene coursScene = new Scene(coursRoot);
 
-        HomeSceneController homController = mainLoader.getController();
-        homController.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles/login-style.css").toExternalForm());
 
-        stage.setScene(mainScene);
+
+        stage.setTitle("Interface de Connexion");
+        stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

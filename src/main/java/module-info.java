@@ -7,6 +7,10 @@ module sn.groupeisi.projetgestionprofesseurs {
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.management;
     requires jbcrypt;
+    requires org.controlsfx.controls;
+    requires java.mail;
+    requires org.apache.poi.ooxml;
+    requires itextpdf;
 
 
     opens sn.groupeisi.projetgestionprofesseurs.main to javafx.fxml;

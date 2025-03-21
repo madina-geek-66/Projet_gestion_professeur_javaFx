@@ -1,5 +1,6 @@
 package sn.groupeisi.projetgestionprofesseurs.entities;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +17,16 @@ public class Notification {
     private User destinataire;
 
     @Column(name = "date_envoi", nullable = false)
-    private LocalDateTime dateEnvoi;
+    private LocalDate dateEnvoi;
+
+    public Notification() {
+    }
+
+    public Notification(String message, User destinataire, LocalDate dateEnvoi) {
+        this.message = message;
+        this.destinataire = destinataire;
+        this.dateEnvoi = dateEnvoi;
+    }
 
     public Long getId() {
         return id;
@@ -42,11 +52,11 @@ public class Notification {
         this.destinataire = destinataire;
     }
 
-    public LocalDateTime getDateEnvoi() {
+    public LocalDate getDateEnvoi() {
         return dateEnvoi;
     }
 
-    public void setDateEnvoi(LocalDateTime dateEnvoi) {
+    public void setDateEnvoi(LocalDate dateEnvoi) {
         this.dateEnvoi = dateEnvoi;
     }
 }

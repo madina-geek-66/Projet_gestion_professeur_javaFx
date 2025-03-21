@@ -17,6 +17,16 @@ import java.util.ResourceBundle;
 
 
 public class UserSceneController implements Initializable {
+
+    private User currentUser = new User();
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     private UserImplement userImplement = new UserImplement();
     @FXML
     private Button btnAdd;

@@ -9,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import sn.groupeisi.projetgestionprofesseurs.dao.SalleImplement;
 import sn.groupeisi.projetgestionprofesseurs.entities.Salle;
+import sn.groupeisi.projetgestionprofesseurs.entities.User;
 import sn.groupeisi.projetgestionprofesseurs.utils.JPAUtils;
 
 import javax.persistence.NoResultException;
@@ -16,6 +17,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SalleSceneController implements Initializable {
+
+    private User currentUser = new User();
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     private SalleImplement salleImplement = new SalleImplement();
 
     @FXML

@@ -1,7 +1,7 @@
 /* Style moderne pour la sidebar de navigation */
 
 .sidebar {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color:  #2A3990;
     -fx-padding: 10 0 10 0;
     -fx-transition: -fx-pref-width 0.3s ease-in-out;
     
@@ -21,20 +21,20 @@
     -fx-transition: 0.3s;
 } */
 
-.sidebar.expanded {
-    -fx-pref-width: 200px;
-}
+/*.sidebar.expanded {*/
+/*    -fx-pref-width: 200px;*/
+/*}*/
 
-.sidebar.collapsed {
-    -fx-pref-width: 60px;
-    -fx-background-color: #1a1a1a;
-}
+/*.sidebar.collapsed {*/
+/*    -fx-pref-width: 60px;*/
+/*    -fx-background-color: #1a1a1a;*/
+/*}*/
 
-.sidebar.collapsed .button {
-    -fx-padding: 10px 10px;
-    -fx-min-width: 40px;
-    -fx-max-width: 40px;
-}
+/*.sidebar.collapsed .button {*/
+/*    -fx-padding: 10px 10px;*/
+/*    -fx-min-width: 40px;*/
+/*    -fx-max-width: 40px;*/
+/*}*/
 
 #drawerBtn {
     -fx-background-color: transparent;
@@ -73,7 +73,7 @@
 #usersBtn,
 #coursBtn,
 #emargementBtn,
-#rapportsBtn, #salleBtn {
+#rapportsBtn, #salleBtn, #homeBtn {
     -fx-background-color: transparent;
     -fx-text-fill: #e0e0e0;
     -fx-font-size: 14px;
@@ -94,10 +94,11 @@
     -fx-text-fill: #e0e0e0;
     -fx-font-size: 14px;
     -fx-padding: 15 20 15 20;
-    -fx-border-width: 1 1 1 1;
+    -fx-border-width: 0 0 1 0;
     -fx-border-color: transparent transparent rgb(83, 19, 19) transparent;
     -fx-cursor: hand;
-    -fx-pref-width: 200px;
+    -fx-pref-width: 200; /* Supprime la largeur préférée fixe */
+    -fx-max-width: Infinity; /* Permet au bouton de s'étendre */
     -fx-alignment: CENTER;
     -fx-content-display: TOP;
 }
@@ -107,7 +108,8 @@
 #coursBtn:hover,
 #emargementBtn:hover,
 #rapportsBtn:hover,
-#salleBtn:hover {
+#salleBtn:hover,
+#homeBtn:hover {
     -fx-background-color: #2a2a2a;
     -fx-border-color: #3498db;
 }
@@ -122,9 +124,10 @@
 #coursBtn.active,
 #emargementBtn.active,
 #rapportsBtn.active,
-#salleBtn.active {
-    -fx-background-color: #031c55;
-    -fx-border-color: #000305;
+#salleBtn.active,
+#homeBtn.active {
+    -fx-background-color: #000000;
+    -fx-border-color: #303032;
     -fx-border-width: 0 0 1 0;
     -fx-text-fill: rgb(255, 255, 255);
 }
@@ -135,7 +138,8 @@
 #emargIcon,
 #rapportIcon,
 #logoutIcon,
-#salleIcon {
+#salleIcon,
+#homeIcon {
     -fx-fill: #e0e0e0;
     -fx-alignment: CENTER;
     -fx-font-size: 18px;
@@ -153,7 +157,8 @@
 #coursBtn.active #courIcon,
 #emargementBtn.active #emargIcon,
 #rapportsBtn.active #rapportIcon,
-#salleBtn.active #salleIcon{
+#salleBtn.active #salleIcon
+#homeBtn.active #homeIcon {
     -fx-fill: #3498db;
 }
 
@@ -161,7 +166,8 @@
 #usersBtn,
 #coursBtn,
 #emargementBtn,
-#rapportsBtn {
+#rapportsBtn,
+#homeBtn {
     -fx-transition: background-color 0.3s, border-color 0.3s;
 }
 
