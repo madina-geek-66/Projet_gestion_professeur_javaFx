@@ -195,5 +195,22 @@ public class CourImplement implements ICour {
         return cours;
     }
 
+    public String getNomCoursParId(String id) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            // Use similar approach to findById in CourImplement
+            Cours cours = entityManager.find(Cours.class, Long.parseLong(id));
+
+            // Return the name if the course exists
+            return (cours != null) ? cours.getNom() : null;
+        } catch (IllegalArgumentException e) {
+            // Handle potential conversion errors
+            System.err.println("Invalid ID format: " + e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
 
 }

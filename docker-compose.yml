@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: emargement-app
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_DATABASE}
+      - DB_USER=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MAIL_HOST=smtp.gmail.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=diallomadina222@gmail.com
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+    ports:
+      - "8080:8080"
+    networks:
+      - emargement-network
+    # Note: pour une application JavaFX qui nécessite une interface graphique,
+    # vous devrez probablement utiliser des solutions comme X11 forwarding ou VNC
+    # pour l'utiliser en conteneur, ou bien changer l'architecture pour séparer
+    # la logique métier du front-end
+
+  db:
+    image: postgres:14
+    container_name: emargement-db
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Script d'initialisation pour créer les tables si nécessaire
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - emargement-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  emargement-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

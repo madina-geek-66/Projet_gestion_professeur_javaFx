@@ -41,12 +41,12 @@
                   </ImageView>
       <!--            <Button fx:id="homeBtn" layoutX="9.0" layoutY="171.0" mnemonicParsing="false" onAction="#openViewEtd" prefHeight="49.0" prefWidth="126.0" text="Accueil" />-->
       <!--            <FontAwesomeIconView fx:id="homeIcon" glyphName="HOME" layoutX="20.0" layoutY="201.0" size="18.0" wrappingWidth="19.91426658630371" />-->
-                  <Button fx:id="homeBtn" prefHeight="69.0" styleClass="menu-button" text="Accueil">
+                  <Button fx:id="homeBtn" prefHeight="69.0" styleClass="menu-button" text="Dashboard">
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="18.0" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="DASHBOARD" size="18.0" />
                      </graphic>
                   </Button>
-                   <Button fx:id="usersBtn" styleClass="menu-button" text="Users">
+                   <Button fx:id="usersBtn" styleClass="menu-button" text="Utilisateurs">
                        <graphic>
                            <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="18.0" text="" />
                        </graphic>

@@ -1,0 +1,66 @@
+name: CI/CD Pipeline - Émargement Professeurs
+
+on:
+  push:
+    branches: [ diallo_madina_emargement ]
+  pull_request:
+    branches: [ diallo_madina_emargement ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout du code source
+      - name: Récupération du code
+        uses: actions/checkout@v3
+
+      # Configuration de Java
+      - name: Configuration de Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Installation des dépendances Maven
+      - name: Installation des dépendances Maven
+        run: mvn install -DskipTests
+
+      # Exécution des tests
+      - name: Exécution des tests
+        run: mvn test
+
+      # Construction du package
+      - name: Construction du package
+        run: mvn package -DskipTests
+
+      # Login à Docker Hub
+      - name: Login à Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      # Construction et publication des images avec Docker Compose
+      - name: Construction des images Docker
+        run: docker-compose build
+
+      # Test de l'application avec Docker Compose
+      - name: Test avec Docker Compose
+        run: |
+          docker-compose up -d db
+          # Attendre que la base de données soit prête
+          sleep 10
+          # Tests d'intégration
+          mvn verify -Pintegration-test
+          docker-compose down
+
+      # Publication des images Docker
+      - name: Publication des images Docker
+        run: |
+          docker tag emargement-app:latest ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-app:latest
+          docker tag postgres:14 ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-db:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-app:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-db:latest

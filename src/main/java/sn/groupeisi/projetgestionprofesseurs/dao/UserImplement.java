@@ -186,13 +186,30 @@ public class UserImplement implements IUser {
         return user;
     }
 
-    public List<User> getUsersByRole(String role) {
+//    public List<User> getUsersByRole(String role) {
+//        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+//        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.role = :role", User.class)
+//                .setParameter("role", role)
+//                .getResultList();
+//        entityManager.close();
+//        return users;
+//    }
+
+    public String getNomProfesseurParId(String id) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
-        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.role = :role", User.class)
-                .setParameter("role", role)
-                .getResultList();
-        entityManager.close();
-        return users;
+        try {
+            // Use similar approach to findById in UserImplement
+            User professeur = entityManager.find(User.class, Long.parseLong(id));
+
+            // Return the name if the professor exists
+            return (professeur != null) ? professeur.getNom() : null;
+        } catch (IllegalArgumentException e) {
+            // Handle potential conversion errors
+            System.err.println("Invalid ID format: " + e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
+        }
     }
 
 

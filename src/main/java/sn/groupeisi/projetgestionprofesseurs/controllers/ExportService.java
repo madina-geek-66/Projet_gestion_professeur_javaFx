@@ -49,7 +49,7 @@ public class ExportService {
 
             // Création des en-têtes
             Row headerRow = sheet.createRow(0);
-            String[] columns = {"ID", "Date", "Statut", "Professeur", "Cours"};
+            String[] columns = {"Num Emargement", "Date", "Statut", "Professeur", "Cours"};
             for (int i = 0; i < columns.length; i++) {
                 org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
                 cell.setCellValue(columns[i]);

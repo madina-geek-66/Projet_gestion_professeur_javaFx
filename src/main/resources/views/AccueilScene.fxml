@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sn.groupeisi.projetgestionprofesseurs.controllers.AccueilSceneController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox spacing="10" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sn.groupeisi.projetgestionprofesseurs.controllers.AccueilSceneController">
 
-</AnchorPane>
+    <!-- Section statistiques supérieures -->
+    <HBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-alignment: center;">
+        <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Total de Salles" />
+            <Label fx:id="labelTotalSalles" style="-fx-font-size: 24px; -fx-text-fill: #3498db;" text="0" />
+        </VBox>
+        <Separator orientation="VERTICAL" />
+        <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Total Professeurs" />
+            <Label fx:id="labelTotalProfesseurs" style="-fx-font-size: 24px; -fx-text-fill: #2ecc71;" text="0" />
+        </VBox>
+        <Separator orientation="VERTICAL" />
+        <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Total Cours" />
+            <Label fx:id="labelTotalCours" style="-fx-font-size: 24px; -fx-text-fill: #e74c3c;" text="0" />
+        </VBox>
+    </HBox>
+
+    <!-- TabPane pour les graphiques -->
+    <TabPane VBox.vgrow="ALWAYS">
+        <Tab text="Émargements par Professeur">
+            <BarChart fx:id="barChartEmargementsProfesseur">
+                <xAxis>
+                    <CategoryAxis label="Professeurs" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Émargements" lowerBound="0" />
+                </yAxis>
+            </BarChart>
+        </Tab>
+        <Tab text="Évolution des Émargements">
+            <LineChart fx:id="lineChartEvolutionEmargements">
+                <xAxis>
+                    <CategoryAxis label="Période" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Nombre d'Émargements" lowerBound="0" />
+                </yAxis>
+            </LineChart>
+        </Tab>
+        <Tab text="Taux de Présence par Cours">
+            <VBox>
+                <PieChart fx:id="pieChartTauxPresence" />
+                <HBox fx:id="legendContainer" alignment="CENTER" spacing="10" />
+            </VBox>
+        </Tab>
+    </TabPane>
+</VBox>

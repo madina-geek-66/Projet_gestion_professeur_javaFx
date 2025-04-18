@@ -110,8 +110,8 @@
 #rapportsBtn:hover,
 #salleBtn:hover,
 #homeBtn:hover {
-    -fx-background-color: #2a2a2a;
-    -fx-border-color: #3498db;
+    -fx-background-color: #232222;
+    -fx-border-color: #ffffff;
 }
 
 #logoutBtn:hover {
@@ -126,8 +126,8 @@
 #rapportsBtn.active,
 #salleBtn.active,
 #homeBtn.active {
-    -fx-background-color: #000000;
-    -fx-border-color: #303032;
+    -fx-background-color: #0a0a0a;
+    -fx-border-color: #070000;
     -fx-border-width: 0 0 1 0;
     -fx-text-fill: rgb(255, 255, 255);
 }
