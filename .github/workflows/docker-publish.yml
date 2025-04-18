@@ -60,7 +60,17 @@ jobs:
       # Publication des images Docker
       - name: Publication des images Docker
         run: |
+          # Liste les images disponibles pour vérification
+          docker images
+          
+          # Construire l'image individuellement si elle n'existe pas via docker-compose
+          docker build -t emargement-app:latest .
+          
+          # Puis continuer avec le tagging et le push
           docker tag emargement-app:latest ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-app:latest
-          docker tag postgres:14 ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-db:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-app:latest
+          
+          # Pour l'image de base postgres, pas besoin de la construire
+          docker pull postgres:14
+          docker tag postgres:14 ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-db:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/emargement-db:latest
