@@ -45,7 +45,7 @@ jobs:
 
       # Construction et publication des images avec Docker Compose
       - name: Construction des images Docker
-        run: docker-compose build
+        run: docker compose build
 
       # Test de l'application avec Docker Compose
       - name: Test avec Docker Compose
