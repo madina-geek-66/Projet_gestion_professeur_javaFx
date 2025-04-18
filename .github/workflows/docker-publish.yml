@@ -50,7 +50,7 @@ jobs:
       # Test de l'application avec Docker Compose
       - name: Test avec Docker Compose
         run: |
-          docker-compose up -d db
+          docker compose up -d db
           # Attendre que la base de données soit prête
           sleep 10
           # Tests d'intégration
