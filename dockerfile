@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-0 \
     libglu1-mesa \
     xorg \
-    libgl1-mesa-glx \
+    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Variables d'environnement pour JavaFX
